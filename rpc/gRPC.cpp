@@ -210,7 +210,7 @@ namespace NekoGui_rpc {
     void Client::Exit() {
         libcore::EmptyReq request;
         libcore::EmptyResp reply;
-        default_grpc_channel->Call("Exit", request, &reply, 500);
+        default_grpc_channel->Call("Exit", request, &reply, 15000);
     }
 
     QString Client::Start(bool *rpcOK, const libcore::LoadConfigReq &request) {
@@ -246,7 +246,7 @@ namespace NekoGui_rpc {
         request.set_direct(direct);
 
         libcore::QueryStatsResp reply;
-        auto status = default_grpc_channel->Call("QueryStats", request, &reply, 500);
+        auto status = default_grpc_channel->Call("QueryStats", request, &reply, 15000);
 
         if (status == QNetworkReply::NoError) {
             return reply.traffic();
@@ -258,7 +258,7 @@ namespace NekoGui_rpc {
     std::string Client::ListConnections() {
         libcore::EmptyReq request;
         libcore::ListConnectionsResp reply;
-        auto status = default_grpc_channel->Call("ListConnections", request, &reply, 500);
+        auto status = default_grpc_channel->Call("ListConnections", request, &reply, 15000);
 
         if (status == QNetworkReply::NoError) {
             return reply.nekoray_connections_json();
